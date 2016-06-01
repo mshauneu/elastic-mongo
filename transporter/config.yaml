@@ -1,0 +1,10 @@
+nodes:
+  mongo:
+    type: mongo
+    uri: mongodb://mongo1/harvester-test
+  es:
+    type: elasticsearch
+    uri: http://es1:9200/
+  debug:
+    type: file
+    uri: stdout://
