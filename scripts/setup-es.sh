@@ -16,11 +16,3 @@ curl -s -XPUT ${ES}:9200/_cluster/settings -d '{
     }
 }'
 
-curl -s -XPUT ${ES}:9200/harvester-test/ -d '{
-    "settings" : {
-        "index" : {
-            "number_of_shards" : 1, 
-            "number_of_replicas" : 2 
-        }
-    }
-}'

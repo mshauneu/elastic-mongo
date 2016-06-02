@@ -1,0 +1,7 @@
+es.node.name=n2 
+cluster.name=esbt
+
+bootstrap:mlockall=true
+discovery.zen:
+  minimum_master_nodes: 1
+  ping.unicast.hosts: ["es1", "es2"]

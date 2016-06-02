@@ -6,8 +6,8 @@ mongo2:
   ports:
     - "27217:27017"
     - "28217:28017"
-# volumes:
-#    - ./mdb2/data:/data
+ volumes:
+    - ./mdb2/data:/data
 
 mongo1:
   image: mongo:3.2.6
@@ -19,29 +19,41 @@ mongo1:
     - "28117:28017"
   links:
     - mongo2:mongo2
-#  volumes:
-#    - ./mdb1/data:/data
+  volumes:
+    - ./mdb1/data:/data
 
 es1:
   image: elasticsearch:2.3.3
   hostname: es1
-  restart: always
-  command: elasticsearch -Des.node.name="n1"
-#  volumes:
-#    - ./es1/data:/usr/share/elasticsearch/data
+  ulimits:
+    memlock: -1
+  environment:
+    ES_HEAP_SIZE: 16g
+  volumes:
+    - ./es1/conf:/usr/share/elasticsearch/conf
+    - ./es1/data:/usr/share/elasticsearch/data
   ports:
     - "9201:9200"
     - "9301:9300"
+  restart: always
 es2:
   image: elasticsearch:2.3.3
   hostname: es2
-  restart: always
-  command: elasticsearch -Des.node.name="n2"
-#  volumes:
-#    - ./es2/data:/usr/share/elasticsearch/data
+  ulimits:
+    memlock: -1
+  environment:
+    ES_HEAP_SIZE: 1g
+  volumes:
+    - ./es2/conf:/usr/share/elasticsearch/conf
+    - ./es2/data:/usr/share/elasticsearch/data
+  environment:
+    ES_HEAP_SIZE: 16g 
+  volumes:
+    - ./es2/data:/usr/share/elasticsearch/data
   ports:
     - "9202:9200"
     - "9302:9300"
+  restart: always
 
 # This configures the MongoDB 
 setupmongodb:
